@@ -1,0 +1,108 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<!-- formulario de agregrar producto -->
+        <div class="container">
+        <h3>Agregar productos</h3>
+        <form id="agregarProductoForm" action="/agregarProductoForm" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                  <label for="txtSku">SKU:</label>
+                  <input name="txtSku" id="txtSku" type="text" class="form-control" >
+                  {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                  {% endif %}   
+                </div>
+                
+                <div class="col-md-8">
+                    <label for="txtNombre">Nombre:</label>
+                    <input name="txtNombre" id="txtNombre" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="txtStock">Stock:</label>
+                    <input name="txtStock" id="txtStock" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="txtPrecio">Precio:</label>
+                    <input name="txtPrecio" id="txtPrecio" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="cmbCategoria">Categoria:</label>
+                    <select name="cmbCategoria" id="cmbCategoria" class="form-select" aria-label="Default select example">
+                        <option disabled selected>Seleccione</option>
+                        {% for c in cate %}
+                        <option value="{{c.id_categoria}}">{{c.nombre_categoria}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                    
+                <div class="col-md-12">
+                  <label for="txtDescripcion">Descripción:</label>
+                  <input name="txtDescripcion" id="txtDescripcion" type="text" class="form-control">
+                </div>
+                
+                <div class="col-md-12">
+                  <label for="txtImg">Imagen Url:</label>
+                  <input name="txtImg" id="txtImg" type="file" class="form-control">
+                </div>
+                
+            </div>
+                <button class="btn btn-success mt-5 w-100">Agregar producto</button>
+          </form>
+      </div> 
+          
+          
+<!-- muestra los agregado -->
+<div class="container mt-5">
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">sku</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for p in prod %}
+        <tr>
+          <th scope="row">{{p.sku}}</th>
+          <td><img src="{{p.imagen_url.url}}" alt="" height="100"></td>
+          <td>{{p.nombre}}</td>
+          <td>{{p.stock}}</td>
+          <td>{{p.precio}}</td>
+          <td>{{p.descripcion}}</td>
+          <td>{{p.id_categoria}}</td>
+          <td><a href="/editarProducto/{{p.sku}}" class="btn btn-primary">Editar</a></td>
+          <td><a href="/eliminarProducto/{{p.sku}}" class="btn btn-danger">Eliminar</a></td>
+        </tr>
+        {% endfor %} 
+      </tbody>
+    </table>
+</div>
+    
+{% endblock %}
+
+
+
+{% block script %}
+  <script src="{% static 'js/jquery/jquery-3.6.4.min.js' %}"></script>
+  <script src="{% static 'js/jquery/jquery.validate.min.js' %}"></script>
+  <script src="{% static 'js/jquery/jquery.js' %}"></script>
+  <script src="{% static 'js/modoOscuro.js' %}"></script>
+{% endblock %}

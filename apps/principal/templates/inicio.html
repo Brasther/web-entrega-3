@@ -1,0 +1,107 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/principal.css'%}">                               <!--cambiar los ccs que se veab los card , carrusel-->
+
+{% endblock %}
+
+{% block body %}
+    
+    <!-- carusel -->
+    <div class="container1 mt-5  ">
+        <div id="carouselExampleAutoplaying" class="carousel slide mx-auto m-5" data-bs-ride="carousel">
+            <div class="carousel-inner ">
+                <div class="carousel-item active ">
+                    <img src="https://www.superzoo.cl/on/demandware.static/-/Sites-SuperZoo-master-catalog/default/dwa593e644/images/223e9-adulto-raza-mediana.jpg" class="img" alt="...">
+                </div>
+                <div class="carousel-item  ">
+                    <img src="https://www.superzoo.cl/on/demandware.static/-/Sites-SuperZoo-master-catalog/default/dw94109e39/images/9ed05-adulto-pollo.jpg" class="img" alt="...">
+                </div>
+                <div class="carousel-item ">
+                    <img src="https://www.superzoo.cl/on/demandware.static/-/Sites-SuperZoo-master-catalog/default/dw57ae5692/images/73156-dc_dry_adultos_mg_pollo-y-pavo_3kg.jpg" class="img" alt="...">
+                </div>        
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!-- cate perros -->
+    <div class="container">
+        <div class="container">
+            <div class="row mt-5">
+                <h3>Perros</h3>
+                {% for p in cate_perros %}
+                {% if p.stock > 0 %}
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <p>SKU:{{p.sku}}</p>
+                        <img src="{{p.imagen_url.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">{{p.nombre}}</h5>
+                          <p class="card-text">{{p.descripcion}}</p>
+                          <p>Precio:${{p.precio}}</p>
+                          <a href="#" class="btn btn-primary">Agregar</a>
+                          {% if user.is_staff %}
+                          <p>stock:{{p.stock}}</p>                      
+                          {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <!-- cate gatos -->
+        <div class="container">
+            <div class="row mt-5">
+                <h3>gatos</h3>
+                {% for p in cate_gatos %}
+                {% if p.stock > 0 %}
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <p>SKU:{{p.sku}}</p>
+                        <img src="{{p.imagen_url.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">{{p.nombre}}</h5>
+                          <p class="card-text">{{p.descripcion}}</p>
+                          <p>Precio:${{p.precio}}</p>
+                          <a href="#" class="btn btn-primary">Agregar</a>
+                          {% if user.is_staff %}
+                          <p>stock:{{p.stock}}</p>                      
+                          {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <p class="reloj" id="reloj" style="width: min-content; margin-right: 100px;"></p>
+            <button class="btn btn-primary" id="botonReloj">Mostrar/Ocultar Reloj</button>
+
+        </div>
+
+    </div>
+    
+    <!--contenido de tienda-->
+    <div class="container">
+        <div id="shopContent" class="shop-content"></div>
+    </div>
+    <!--modal container-->
+    <div  id="modal-container" class="modal-container "></div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/jquery/jquery-3.6.4.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery.js' %}"></script>   
+    <script src="{% static 'js/modoOscuro.js' %}"></script>
+{% endblock %}
